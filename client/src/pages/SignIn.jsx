@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable no-unused-vars */
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,6 +12,7 @@ export default function SignIn() {
   const [formData, setFormData] = useState({});
   const { loading, error } = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -23,7 +23,7 @@ export default function SignIn() {
   const handleSubmit = async (ev) => {
     ev.preventDefault();
     try {
-      useDispatch(signInStart());
+      dispatch(signInStart());
       const res = await fetch("/api/auth/signin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -31,13 +31,13 @@ export default function SignIn() {
       });
       const data = await res.json();
       if (data.success === false) {
-        useDispatch(signInFailure(data.message));
+        dispatch(signInFailure(data.message));
         return;
       }
-      useDispatch(signInSuccess(data));
+      dispatch(signInSuccess(data));
       navigate("/");
     } catch (error) {
-      useDispatch(signInFailure(error.message));
+      dispatch(signInFailure(error.message));
     }
   };
 
