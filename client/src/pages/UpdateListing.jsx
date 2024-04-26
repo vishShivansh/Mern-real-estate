@@ -1,6 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable react/jsx-key */
 /* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   getDownloadURL,
   getStorage,
@@ -10,31 +9,31 @@ import {
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { app } from "../firebase.jsx";
+import { app } from "../firebase";
 
-export default function UpdateListing() {
-  const [files, setFiles] = useState([]);
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
+export default function CreateListing() {
   const { currentUser } = useSelector((state) => state.user);
+  const navigate = useNavigate();
+  const params = useParams();
+  const [files, setFiles] = useState([]);
   const [formData, setFormData] = useState({
     imageUrls: [],
     name: "",
     description: "",
     address: "",
+    type: "rent",
+    bedrooms: 1,
+    bathrooms: 1,
     regularPrice: 50,
     discountPrice: 0,
-    bathrooms: 1,
-    bedrooms: 1,
+    offer: false,
     parking: false,
     furnished: false,
-    type: "rent",
-    offer: false,
   });
   const [imageUploadError, setImageUploadError] = useState(false);
   const [uploading, setUploading] = useState(false);
-  const navigate = useNavigate();
-  const params = useParams();
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchListing = async () => {
@@ -56,6 +55,7 @@ export default function UpdateListing() {
       setUploading(true);
       setImageUploadError(false);
       const promises = [];
+
       for (let i = 0; i < files.length; i++) {
         promises.push(storeImage(files[i]));
       }
@@ -77,6 +77,7 @@ export default function UpdateListing() {
       setUploading(false);
     }
   };
+
   const storeImage = async (file) => {
     return new Promise((resolve, reject) => {
       const storage = getStorage(app);
@@ -111,21 +112,32 @@ export default function UpdateListing() {
 
   const handleChange = (e) => {
     if (e.target.id === "sale" || e.target.id === "rent") {
-      setFormData({ ...formData, type: e.target.id });
+      setFormData({
+        ...formData,
+        type: e.target.id,
+      });
     }
+
     if (
       e.target.id === "parking" ||
       e.target.id === "furnished" ||
       e.target.id === "offer"
     ) {
-      setFormData({ ...formData, [e.target.id]: e.target.checked });
+      setFormData({
+        ...formData,
+        [e.target.id]: e.target.checked,
+      });
     }
+
     if (
       e.target.type === "number" ||
       e.target.type === "text" ||
       e.target.type === "textarea"
     ) {
-      setFormData({ ...formData, [e.target.id]: e.target.value });
+      setFormData({
+        ...formData,
+        [e.target.id]: e.target.value,
+      });
     }
   };
 
@@ -133,7 +145,7 @@ export default function UpdateListing() {
     e.preventDefault();
     try {
       if (formData.imageUrls.length < 1)
-        return setError("You must upload atleast one image");
+        return setError("You must upload at least one image");
       if (+formData.regularPrice < +formData.discountPrice)
         return setError("Discount price must be lower than regular price");
       setLoading(true);
@@ -159,34 +171,29 @@ export default function UpdateListing() {
       setLoading(false);
     }
   };
-
   return (
     <main className="p-3 max-w-4xl mx-auto">
       <h1 className="text-3xl font-semibold text-center my-7">
-        Update a listing
+        Update a Listing
       </h1>
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col 2sm:flex-row gap-4"
-      >
+      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4">
         <div className="flex flex-col gap-4 flex-1">
           <input
             type="text"
             placeholder="Name"
+            className="border p-3 rounded-lg"
+            id="name"
             maxLength="62"
             minLength="10"
-            id="name"
-            className="border p-3 rounded-lg"
             required
             onChange={handleChange}
             value={formData.name}
           />
-
           <textarea
             type="text"
             placeholder="Description"
-            id="description"
             className="border p-3 rounded-lg"
+            id="description"
             required
             onChange={handleChange}
             value={formData.description}
@@ -194,8 +201,8 @@ export default function UpdateListing() {
           <input
             type="text"
             placeholder="Address"
-            id="address"
             className="border p-3 rounded-lg"
+            id="address"
             required
             onChange={handleChange}
             value={formData.address}
@@ -256,9 +263,9 @@ export default function UpdateListing() {
             <div className="flex items-center gap-2">
               <input
                 type="number"
-                min={1}
-                max={10}
                 id="bedrooms"
+                min="1"
+                max="10"
                 required
                 className="p-3 border border-gray-300 rounded-lg"
                 onChange={handleChange}
@@ -269,9 +276,9 @@ export default function UpdateListing() {
             <div className="flex items-center gap-2">
               <input
                 type="number"
-                min={1}
-                max={10}
                 id="bathrooms"
+                min="1"
+                max="10"
                 required
                 className="p-3 border border-gray-300 rounded-lg"
                 onChange={handleChange}
@@ -282,9 +289,9 @@ export default function UpdateListing() {
             <div className="flex items-center gap-2">
               <input
                 type="number"
-                min={50}
-                max={10000000}
                 id="regularPrice"
+                min="50"
+                max="10000000"
                 required
                 className="p-3 border border-gray-300 rounded-lg"
                 onChange={handleChange}
@@ -292,16 +299,18 @@ export default function UpdateListing() {
               />
               <div className="flex flex-col items-center">
                 <p>Regular price</p>
-                {formData.type === "rent" && <span>($ / month)</span>}
+                {formData.type === "rent" && (
+                  <span className="text-xs">($ / month)</span>
+                )}
               </div>
             </div>
             {formData.offer && (
               <div className="flex items-center gap-2">
                 <input
                   type="number"
-                  min={0}
-                  max={10000000}
                   id="discountPrice"
+                  min="0"
+                  max="10000000"
                   required
                   className="p-3 border border-gray-300 rounded-lg"
                   onChange={handleChange}
@@ -309,7 +318,9 @@ export default function UpdateListing() {
                 />
                 <div className="flex flex-col items-center">
                   <p>Discounted price</p>
-                  {formData.type === "rent" && <span>($ / month)</span>}
+                  {formData.type === "rent" && (
+                    <span className="text-xs">($ / month)</span>
+                  )}
                 </div>
               </div>
             )}
@@ -325,15 +336,15 @@ export default function UpdateListing() {
           <div className="flex gap-4">
             <input
               onChange={(e) => setFiles(e.target.files)}
-              className="p-3 border border-gray-300 rounded w-full "
+              className="p-3 border border-gray-300 rounded w-full"
               type="file"
               id="images"
-              accept="/images/*"
+              accept="image/*"
               multiple
             />
             <button
               type="button"
-              disabled={uploading || loading}
+              disabled={uploading}
               onClick={handleImageSubmit}
               className="p-3 text-green-700 border border-green-700 rounded uppercase hover:shadow-lg disabled:opacity-80"
             >
@@ -364,7 +375,7 @@ export default function UpdateListing() {
               </div>
             ))}
           <button
-            disabled={uploading || loading}
+            disabled={loading || uploading}
             className="p-3 bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
           >
             {loading ? "Updating..." : "Update listing"}
