@@ -5,7 +5,7 @@ export const createListing = async (req, res, next) => {
   try {
     const listing = await Listing.create(req.body);
 
-    res.status(201).json(listing);
+    return res.status(201).json(listing);
   } catch (error) {
     next(error);
   }
@@ -79,7 +79,7 @@ export const getListings = async (req, res, next) => {
     }
     let type = req.query.type;
     if (type === undefined || type === "all") {
-      type = { $in: [sale, rent] };
+      type = { $in: ["sale", "rent"] };
     }
 
     const searchTerm = req.query.searchTerm || "";
@@ -97,7 +97,7 @@ export const getListings = async (req, res, next) => {
       })
       .limit(limit)
       .skip(startIndex);
-    res.status(200).json(listings);
+    return res.status(200).json(listings);
   } catch (error) {
     next(error);
   }
