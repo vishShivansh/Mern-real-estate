@@ -8,5 +8,9 @@ export default {
       "2sm": { max: "768px" },
     },
   },
-  plugins: [],
+  plugins: [
+    // eslint-disable-next-line no-undef
+    require("@tailwindcss/line-clamp"),
+    // ...
+  ],
 };

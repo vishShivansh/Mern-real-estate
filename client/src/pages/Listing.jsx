@@ -8,14 +8,12 @@ import {
   FaShare,
 } from "react-icons/fa";
 import { useSelector } from "react-redux";
-
-import Contact from "../components/Contact";
-
 import { useParams } from "react-router-dom";
 import SwiperCore from "swiper";
 import "swiper/css/bundle";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import Contact from "../components/Contact";
 
 // https://sabe.io/blog/javascript-format-numbers-commas#:~:text=The%20best%20way%20to%20format,format%20the%20number%20with%20commas.
 
@@ -26,7 +24,6 @@ export default function Listing() {
   const [error, setError] = useState(false);
   const [copied, setCopied] = useState(false);
   const [contact, setContact] = useState(false);
-
   const params = useParams();
   const { currentUser } = useSelector((state) => state.user);
 
@@ -64,7 +61,7 @@ export default function Listing() {
             {listing.imageUrls.map((url) => (
               <SwiperSlide key={url}>
                 <div
-                  className="h-[550px]"
+                  className="h-[550px] w-full"
                   style={{
                     background: `url(${url}) center no-repeat`,
                     backgroundSize: "cover",
@@ -91,16 +88,14 @@ export default function Listing() {
             </p>
           )}
           <div className="flex flex-col max-w-4xl mx-auto p-3 my-7 gap-4">
-            <p className="text-2xl font-semibold">
+            <p className="text-2xl font-semibold ">
               {listing.name} - ${" "}
               {listing.offer
-                ? (
-                    +listing.regularPrice - +listing.discountPrice
-                  ).toLocaleString("en-US")
+                ? listing.discountPrice.toLocaleString("en-US")
                 : listing.regularPrice.toLocaleString("en-US")}
               {listing.type === "rent" && " / month"}
             </p>
-            <p className="flex items-center mt-6 gap-2 text-slate-600  text-sm">
+            <p className="flex items-center mt-6 gap-2 text-slate-600 text-sm truncate">
               <FaMapMarkerAlt className="text-green-700" />
               {listing.address}
             </p>
@@ -110,11 +105,11 @@ export default function Listing() {
               </p>
               {listing.offer && (
                 <p className="bg-green-900 w-full max-w-[200px] text-white text-center p-1 rounded-md">
-                  ${+listing.discountPrice} OFF
+                  ${+listing.regularPrice - +listing.discountPrice} OFF
                 </p>
               )}
             </div>
-            <p className="text-slate-800">
+            <p className="text-slate-800 truncate">
               <span className="font-semibold text-black">Description - </span>
               {listing.description}
             </p>
