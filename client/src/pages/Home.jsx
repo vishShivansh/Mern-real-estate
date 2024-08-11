@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import SwiperCore from "swiper";
 import "swiper/css/bundle";
-import { Navigation } from "swiper/modules";
+import { Autoplay, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import ListingItem from "../components/ListingItems";
 
@@ -11,7 +11,7 @@ export default function Home() {
   const [offerListings, setOfferListings] = useState([]);
   const [saleListings, setSaleListings] = useState([]);
   const [rentListings, setRentListings] = useState([]);
-  SwiperCore.use([Navigation]);
+  SwiperCore.use([Navigation, Autoplay]);
   console.log(offerListings);
   useEffect(() => {
     const fetchOfferListings = async () => {
@@ -70,22 +70,24 @@ export default function Home() {
       </div>
 
       {/* swiper */}
-      <Swiper navigation>
-        {offerListings &&
-          offerListings.length > 0 &&
-          offerListings.map((listing) => (
-            <SwiperSlide>
-              <div
-                style={{
-                  background: `url(${listing.imageUrls[0]}) center no-repeat`,
-                  backgroundSize: "cover",
-                }}
-                className="h-[500px]"
-                key={listing._id}
-              ></div>
-            </SwiperSlide>
-          ))}
-      </Swiper>
+      <div className="max-w-9xl mx-auto p-3">
+        <Swiper navigation autoplay={{ delay: 3000 }}>
+          {offerListings &&
+            offerListings.length > 0 &&
+            offerListings.map((listing) => (
+              <SwiperSlide>
+                <div
+                  style={{
+                    background: `url(${listing.imageUrls[0]}) center no-repeat`,
+                    backgroundSize: "cover",
+                  }}
+                  className="h-[500px] rounded-lg"
+                  key={listing._id}
+                ></div>
+              </SwiperSlide>
+            ))}
+        </Swiper>
+      </div>
 
       {/* listing results for offer, sale and rent */}
 

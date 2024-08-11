@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-
 import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { useSelector } from "react-redux";
@@ -30,8 +29,8 @@ export default function Header() {
       <div className="flex justify-between items-center max-w-6xl mx-auto p-3">
         <Link to={"/"}>
           <h1 className="font-bold text-sm sm:text-xl flex flex-wrap">
-            <span className="text-slate-500">Sahand</span>
-            <span className="text-slate-700">Estate</span>
+            <span className="text-slate-500">Luxe</span>
+            <span className="text-slate-700">Nest</span>
           </h1>
         </Link>
         <form
@@ -49,7 +48,7 @@ export default function Header() {
             <FaSearch className="text-slate-600" />
           </button>
         </form>
-        <ul>
+        <ul className="flex gap-4">
           <Link to={"/"}>
             <li className="2sm:hidden sm:inline text-slate-700 hover:underline ">
               Home
