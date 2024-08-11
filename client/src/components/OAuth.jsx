@@ -1,8 +1,11 @@
+/* eslint-disable no-undef */
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { app } from "../firebase";
 import { signInSuccess } from "../redux/user/userSlice";
+
+const API_BASE_URL = process.env.API_BASE_URL;
 
 export default function OAuth() {
   const dispatch = useDispatch();
@@ -12,7 +15,7 @@ export default function OAuth() {
       const provider = new GoogleAuthProvider();
       const auth = getAuth(app);
       const result = await signInWithPopup(auth, provider);
-      const res = await fetch("/api/auth/google", {
+      const res = await fetch(`${API_BASE_URL}/api/auth/google`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,6 +9,8 @@ import {
   signInStart,
   signInSuccess,
 } from "../redux/user/userSlice";
+
+const API_BASE_URL = process.env.API_BASE_URL;
 
 export default function SignIn() {
   const [formData, setFormData] = useState({});
@@ -25,7 +28,7 @@ export default function SignIn() {
     ev.preventDefault();
     try {
       dispatch(signInStart());
-      const res = await fetch("/api/auth/signin", {
+      const res = await fetch(`${API_BASE_URL}/api/auth/signin`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
