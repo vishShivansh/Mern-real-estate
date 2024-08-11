@@ -11,13 +11,13 @@ export default defineConfig({
       },
     },
   },
-  build: {
-    outDir: "dist", // This should match the Output Directory setting in Vercel
-    rollupOptions: {
-      input: {
-        main: "./index.html",
-      },
-    },
-  },
+  // build: {
+  //   outDir: "dist", // This should match the Output Directory setting in Vercel
+  //   rollupOptions: {
+  //     input: {
+  //       main: "./index.html",
+  //     },
+  //   },
+  // },
   plugins: [react()],
 });

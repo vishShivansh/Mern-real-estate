@@ -1,0 +1,35 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/index.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "client/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "client/dist"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/index.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/client/dist/$1"
+    }
+  ],
+  "env": {
+    "MONGO": "mongodb+srv://sgshivansh22:sahand@mern-estate.czujamx.mongodb.net/mern-estate?retryWrites=true&w=majority&appName=mern-estate",
+    "JWT_SECRET": "nwioahfioenajfbq34uge2qfuqf930742"
+  },
+  "build": {
+    "env": {
+      "VITE_FIREBASE_API_KEY": "AIzaSyDgfE7wFS_bDfyJWex4iA1y5wrbCcfNyJE"
+    }
+  }
+}
