@@ -3,8 +3,6 @@ import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
-import path from "path";
-import { fileURLToPath } from "url";
 import authRouter from "./api/routes/auth.route.js";
 import listingRouter from "./api/routes/listing.route.js";
 import userRouter from "./api/routes/user.route.js";
@@ -21,10 +19,6 @@ mongoose
   .catch((err) => {
     console.log(err);
   });
-
-// Get the current directory
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 const app = express();
 
@@ -44,14 +38,6 @@ app.use(cors(corsOptions));
 app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/listing", listingRouter);
-
-// Serve static files
-app.use(express.static(path.join(__dirname, "client", "dist")));
-
-// Handle SPA routes
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
-});
 
 // Error handling middleware
 app.use((err, req, res, next) => {
