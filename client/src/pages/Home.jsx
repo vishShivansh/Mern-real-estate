@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable react/jsx-key */
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -6,6 +7,8 @@ import "swiper/css/bundle";
 import { Autoplay, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import ListingItem from "../components/ListingItems";
+
+const API_BASE_URL = process.env.API_BASE_URL;
 
 export default function Home() {
   const [offerListings, setOfferListings] = useState([]);
@@ -16,7 +19,9 @@ export default function Home() {
   useEffect(() => {
     const fetchOfferListings = async () => {
       try {
-        const res = await fetch("/api/listing/get?offer=true&limit=4");
+        const res = await fetch(
+          `${API_BASE_URL}/api/listing/get?offer=true&limit=4`
+        );
         const data = await res.json();
         setOfferListings(data);
         fetchRentListings();
@@ -26,7 +31,9 @@ export default function Home() {
     };
     const fetchRentListings = async () => {
       try {
-        const res = await fetch("/api/listing/get?type=rent&limit=4");
+        const res = await fetch(
+          `${API_BASE_URL}/api/listing/get?type=rent&limit=4`
+        );
         const data = await res.json();
         setRentListings(data);
         fetchSaleListings();
@@ -37,7 +44,9 @@ export default function Home() {
 
     const fetchSaleListings = async () => {
       try {
-        const res = await fetch("/api/listing/get?type=sale&limit=4");
+        const res = await fetch(
+          `${API_BASE_URL}/api/listing/get?type=sale&limit=4`
+        );
         const data = await res.json();
         setSaleListings(data);
       } catch (error) {

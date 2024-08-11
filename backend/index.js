@@ -1,8 +1,9 @@
 import cookieParser from "cookie-parser";
+import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
-import path from "path";
+// import path from "path";
 import authRouter from "./api/routes/auth.route.js";
 import listingRouter from "./api/routes/listing.route.js";
 import userRouter from "./api/routes/user.route.js";
@@ -17,11 +18,19 @@ mongoose
     console.log(err);
   });
 
-const _dirname = path.resolve();
+// const _dirname = path.resolve();
 const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
+
+const corsOptions = {
+  origin: "https://mern-real-estate-eosin.vercel.app",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+
+app.use(cors(corsOptions));
 
 app.listen(3000, () => {
   console.log("Server is running on port 3000!");
@@ -31,11 +40,11 @@ app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/listing", listingRouter);
 
-app.use(express.static(path.join(_dirname, "/client/dist")));
+// app.use(express.static(path.join(_dirname, "/client/dist")));
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
-});
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+// });
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
