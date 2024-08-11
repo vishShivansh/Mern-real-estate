@@ -34,6 +34,8 @@ export const signin = async (req, res, next) => {
         secure: process.env.NODE_ENV === "production",
         sameSite: process.env.NODE_ENV === "production" ? "Strict" : "Lax",
         maxAge: 24 * 60 * 60 * 1000,
+        domain: "https://mern-real-estate-eosin.vercel.app/",
+        path: "/",
       })
       .status(200)
       .json(restInfo);
@@ -54,6 +56,8 @@ export const google = async (req, res, next) => {
           secure: process.env.NODE_ENV === "production",
           sameSite: process.env.NODE_ENV === "production" ? "Strict" : "Lax",
           maxAge: 24 * 60 * 60 * 1000,
+          domain: "https://mern-real-estate-eosin.vercel.app/",
+          path: "/",
         })
         .status(200)
         .json(rest);
@@ -80,6 +84,8 @@ export const google = async (req, res, next) => {
           secure: process.env.NODE_ENV === "production",
           sameSite: process.env.NODE_ENV === "production" ? "Strict" : "Lax",
           maxAge: 24 * 60 * 60 * 1000,
+          domain: "https://mern-real-estate-eosin.vercel.app/",
+          path: "/",
         })
         .status(200)
         .json(rest);
