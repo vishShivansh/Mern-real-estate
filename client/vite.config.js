@@ -3,11 +3,13 @@ import { defineConfig } from "vite";
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: "/",
   server: {
     proxy: {
-      "/api": {
-        target: "http://localhost:3000",
+      "/": {
+        target: "https://mern-real-estate-tkho.onrender.com/",
         secure: false,
+        changeOrigin: true,
       },
     },
   },
