@@ -33,7 +33,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 const corsOptions = {
-  origin: "https://mern-real-estate-teal.vercel.app/",
+  origin: "https://mern-real-estate-gamma.vercel.app/",
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
