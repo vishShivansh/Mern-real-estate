@@ -29,7 +29,7 @@ import {
   updateUserSuccess,
 } from "../redux/user/userSlice.js";
 
-const API_BASE_URL = process.env.RENDER_API_BASE_URL;
+const API_BASE_URL = "https://mern-real-estate-tkho.onrender.com";
 
 export default function Profile() {
   const fileRef = useRef(null);

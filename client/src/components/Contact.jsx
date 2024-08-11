@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const API_BASE_URL = process.env.RENDER_API_BASE_URL;
+const API_BASE_URL = "https://mern-real-estate-tkho.onrender.com";
 
 export default function Contact({ listing }) {
   const [landlord, setLandlord] = useState(null);
