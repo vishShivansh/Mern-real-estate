@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { app } from "../firebase";
 import { signInSuccess } from "../redux/user/userSlice";
 
-const API_BASE_URL = process.env.API_BASE_URL;
+const API_BASE_URL = process.env.RENDER_API_BASE_URL;
 
 export default function OAuth() {
   const dispatch = useDispatch();

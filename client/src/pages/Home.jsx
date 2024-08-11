@@ -8,7 +8,7 @@ import { Autoplay, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import ListingItem from "../components/ListingItems";
 
-const API_BASE_URL = process.env.API_BASE_URL;
+const API_BASE_URL = process.env.RENDER_API_BASE_URL;
 
 export default function Home() {
   const [offerListings, setOfferListings] = useState([]);

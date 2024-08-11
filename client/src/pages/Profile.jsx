@@ -29,7 +29,7 @@ import {
   updateUserSuccess,
 } from "../redux/user/userSlice.js";
 
-const API_BASE_URL = process.env.API_BASE_URL;
+const API_BASE_URL = process.env.RENDER_API_BASE_URL;
 
 export default function Profile() {
   const fileRef = useRef(null);

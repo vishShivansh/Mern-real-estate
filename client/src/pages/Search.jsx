@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ListingItem from "../components/ListingItems";
 
-const API_BASE_URL = process.env.API_BASE_URL;
+const API_BASE_URL = process.env.RENDER_API_BASE_URL;
 
 export default function Search() {
   const navigate = useNavigate();
