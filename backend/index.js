@@ -26,6 +26,12 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
+// Middleware to log cookies
+app.use((req, res, next) => {
+  console.log("Cookies:", req.cookies);
+  next();
+});
+
 const corsOptions = {
   origin: "https://mern-real-estate-gamma.vercel.app",
   methods: ["GET", "POST", "PUT", "DELETE"],
