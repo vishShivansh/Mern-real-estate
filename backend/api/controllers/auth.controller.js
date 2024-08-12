@@ -35,8 +35,8 @@ export const signin = async (req, res, next) => {
     res
       .cookie("access_token", token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: process.env.NODE_ENV === "production" ? "Strict" : "Lax",
+        secure: true,
+        sameSite: "None",
         maxAge: 24 * 60 * 60 * 1000,
         domain: "mern-real-estate-gamma.vercel.app",
         path: "/",
@@ -59,8 +59,8 @@ export const google = async (req, res, next) => {
       res
         .cookie("access_token", token, {
           httpOnly: true,
-          secure: process.env.NODE_ENV === "production",
-          sameSite: process.env.NODE_ENV === "production" ? "Strict" : "Lax",
+          secure: true,
+          sameSite: "None",
           maxAge: 24 * 60 * 60 * 1000,
           domain: "mern-real-estate-gamma.vercel.app",
           path: "/",
@@ -89,8 +89,8 @@ export const google = async (req, res, next) => {
       res
         .cookie("access_token", token, {
           httpOnly: true,
-          secure: process.env.NODE_ENV === "production",
-          sameSite: process.env.NODE_ENV === "production" ? "Strict" : "Lax",
+          secure: true,
+          sameSite: "None",
           maxAge: 24 * 60 * 60 * 1000,
           domain: "mern-real-estate-gamma.vercel.app",
           path: "/",
@@ -107,8 +107,8 @@ export const signOut = async (req, res, next) => {
   try {
     res.clearCookie("access_token", {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "Strict" : "Lax",
+      secure: true,
+      sameSite: "None",
     });
     res.status(200).json("User has been logged out!");
   } catch (error) {
