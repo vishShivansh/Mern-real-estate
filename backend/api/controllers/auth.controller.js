@@ -3,6 +3,8 @@ import jwt from "jsonwebtoken";
 import User from "../models/user.model.js";
 import { errorHandler } from "../utils/error.js";
 
+const JWT_SECRET = "nwioahfioenajfbq34uge2qfuqf930742";
+
 export const signup = async (req, res, next) => {
   const { username, email, password } = req.body;
   const hashedPassword = bcryptjs.hashSync(password, 10);
@@ -28,7 +30,7 @@ export const signin = async (req, res, next) => {
     if (!validPassword) {
       return next(errorHandler(401, "Wrong credentials!"));
     }
-    const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: validUser._id }, JWT_SECRET, {
       expiresIn: "24h",
     });
     console.log("Generated Token: ", token);
@@ -53,7 +55,7 @@ export const google = async (req, res, next) => {
   try {
     const user = await User.findOne({ email: req.body.email });
     if (user) {
-      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      const token = jwt.sign({ id: user._id }, JWT_SECRET, {
         expiresIn: "24h",
       });
       const { password: pass, ...rest } = user._doc;
@@ -83,7 +85,7 @@ export const google = async (req, res, next) => {
       });
 
       await newUser.save();
-      const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, {
+      const token = jwt.sign({ id: newUser._id }, JWT_SECRET, {
         expiresIn: "24h",
       });
       const { password: pass, ...rest } = newUser._doc;
