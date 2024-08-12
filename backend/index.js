@@ -36,6 +36,7 @@ const corsOptions = {
   origin: "https://mern-real-estate-gamma.vercel.app",
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true, // Allow cookies to be sent
 };
 
 app.use(cors(corsOptions));

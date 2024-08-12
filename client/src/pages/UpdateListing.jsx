@@ -164,6 +164,7 @@ export default function CreateListing() {
             ...formData,
             userRef: currentUser._id,
           }),
+          credentials: "include",
         }
       );
       const data = await res.json();

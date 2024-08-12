@@ -23,6 +23,7 @@ export default function OAuth() {
           email: result.user.email,
           photo: result.user.photoURL,
         }),
+        credentials: "include", // Include cookies with the request
       });
       const data = await res.json();
       dispatch(signInSuccess(data));
