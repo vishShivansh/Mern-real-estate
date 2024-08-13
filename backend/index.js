@@ -3,9 +3,9 @@ import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
-import authRouter from "./routes/auth.route.js";
-import listingRouter from "./routes/listing.route.js";
-import userRouter from "./routes/user.route.js";
+import authRouter from "./api/routes/auth.route.js";
+import listingRouter from "./api/routes/listing.route.js";
+import userRouter from "./api/routes/user.route.js";
 
 // Initialize environment variables
 dotenv.config();
