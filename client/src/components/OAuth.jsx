@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { app } from "../firebase";
 import { signInSuccess } from "../redux/user/userSlice";
 
-const API_BASE_URL = "https://mern-real-estate-tkho.onrender.com";
+const API_BASE_URL = "https://mern-real-estate-a5fc.onrender.com";
 
 export default function OAuth() {
   const dispatch = useDispatch();

@@ -12,7 +12,7 @@ import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { app } from "../firebase";
 
-const API_BASE_URL = "https://mern-real-estate-tkho.onrender.com";
+const API_BASE_URL = "https://mern-real-estate-a5fc.onrender.com";
 
 export default function CreateListing() {
   const { currentUser } = useSelector((state) => state.user);

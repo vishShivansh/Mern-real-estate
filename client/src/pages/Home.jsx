@@ -8,7 +8,7 @@ import { Autoplay, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import ListingItem from "../components/ListingItems";
 
-const API_BASE_URL = "https://mern-real-estate-tkho.onrender.com";
+const API_BASE_URL = "https://mern-real-estate-a5fc.onrender.com";
 
 export default function Home() {
   const [offerListings, setOfferListings] = useState([]);

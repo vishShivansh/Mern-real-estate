@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import OAuth from "../components/OAuth";
 
-const API_BASE_URL = "https://mern-real-estate-tkho.onrender.com";
+const API_BASE_URL = "https://mern-real-estate-a5fc.onrender.com";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({});
