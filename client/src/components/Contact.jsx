@@ -17,6 +17,7 @@ export default function Contact({ listing }) {
       try {
         const res = await fetch(`${API_BASE_URL}/api/user/${listing.userRef}`);
         const data = await res.json();
+        console.log({ data });
         setLandlord(data);
       } catch (error) {
         console.log(error);
