@@ -1,6 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-undef */
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ListingItem from "../components/ListingItems";
+
+// const API_BASE_URL = "https://mern-real-estate-a5fc.onrender.com";
 
 export default function Search() {
   const navigate = useNavigate();

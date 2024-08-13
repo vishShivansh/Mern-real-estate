@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
@@ -10,6 +11,8 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { app } from "../firebase";
+
+// const API_BASE_URL = "https://mern-real-estate-a5fc.onrender.com";
 
 export default function CreateListing() {
   const { currentUser } = useSelector((state) => state.user);
@@ -159,6 +162,7 @@ export default function CreateListing() {
           ...formData,
           userRef: currentUser._id,
         }),
+        credentials: "include",
       });
       const data = await res.json();
       setLoading(false);

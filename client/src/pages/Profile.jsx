@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable react-hooks/exhaustive-deps */
 
 /* 
@@ -27,6 +28,8 @@ import {
   updateUserStart,
   updateUserSuccess,
 } from "../redux/user/userSlice.js";
+
+// const API_BASE_URL = "https://mern-real-estate-a5fc.onrender.com";
 
 export default function Profile() {
   const fileRef = useRef(null);
@@ -79,7 +82,6 @@ export default function Profile() {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -90,6 +92,7 @@ export default function Profile() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
+        credentials: "include",
       });
       const data = await res.json();
 
@@ -123,7 +126,7 @@ export default function Profile() {
   const handleSignOut = async () => {
     try {
       dispatch(signOutUserStart());
-      const res = await fetch("/api/auth/signout");
+      const res = await fetch(`/api/auth/signout`);
       const data = await res.json();
       if (data.success === false) {
         dispatch(signOutUserFailure(data.message));
@@ -138,7 +141,13 @@ export default function Profile() {
   const handleShowListings = async () => {
     try {
       setShowListingError(false);
-      const res = await fetch(`/api/user/listing/${currentUser._id}`);
+      const res = await fetch(`/api/user/listing/${currentUser._id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
       const data = await res.json();
       if (data.success === false) {
         setShowListingError(true);
@@ -154,6 +163,7 @@ export default function Profile() {
     try {
       const res = await fetch(`/api/listing/delete/${listingId}`, {
         method: "DELETE",
+        credentials: "include",
       });
       const data = await res.json();
       if (data.success === false) {
@@ -202,6 +212,7 @@ export default function Profile() {
         <input
           type="text"
           placeholder="username"
+          id="username"
           className="border p-3 rounded-lg"
           defaultValue={currentUser.username}
           onChange={handleChange}

@@ -18,6 +18,8 @@ export const signup = async (req, res, next) => {
 export const signin = async (req, res, next) => {
   const { email, password } = req.body;
   try {
+    // Log JWT secret for debugging (ensure this is removed before production)
+    console.log("JWT Secret:", process.env.JWT_SECRET); // Use this cautiously
     const validUser = await User.findOne({ email });
     if (!validUser) {
       return next(errorHandler(404, "User not found!"));
@@ -26,12 +28,21 @@ export const signin = async (req, res, next) => {
     if (!validPassword) {
       return next(errorHandler(401, "Wrong credentials!"));
     }
-    const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
+    const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET, {
+      expiresIn: "24h",
+    });
+    console.log("Generated Token: ", token);
+
     const { password: pass, ...restInfo } = validUser._doc;
     res
-      .cookie("access_token", token, { httpOnly: true })
+      .cookie("access_token", token, {
+        httpOnly: true,
+        secure: false, // Use true if the site is served over HTTPS
+        sameSite: "Lax",
+      })
       .status(200)
       .json(restInfo);
+    console.log("Set-Cookie Header: ", res.getHeaders()["set-cookie"]);
   } catch (error) {
     next(error);
   }
@@ -41,12 +52,22 @@ export const google = async (req, res, next) => {
   try {
     const user = await User.findOne({ email: req.body.email });
     if (user) {
-      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+        expiresIn: "24h",
+      });
+      console.log("JWT Secret:", process.env.JWT_SECRET);
+      console.log("Generated Token: ", token);
       const { password: pass, ...rest } = user._doc;
       res
-        .cookie("access_token", token, { httpOnly: true })
+        .cookie("access_token", token, {
+          httpOnly: true,
+          secure: false, // Use true if the site is served over HTTPS
+
+          sameSite: "Lax",
+        })
         .status(200)
         .json(rest);
+      console.log("Set-Cookie Header: ", res.getHeaders()["set-cookie"]);
     } else {
       const generatePassword =
         Math.random().toString(36).slice(-8) +
@@ -62,12 +83,19 @@ export const google = async (req, res, next) => {
       });
 
       await newUser.save();
-      const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
+      const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, {
+        expiresIn: "24h",
+      });
       const { password: pass, ...rest } = newUser._doc;
       res
-        .cookie("access_token", token, { httpOnly: true })
+        .cookie("access_token", token, {
+          httpOnly: true,
+          secure: false, // Use true if the site is served over HTTPS
+          sameSite: "Lax",
+        })
         .status(200)
         .json(rest);
+      console.log("Set-Cookie Header: ", res.getHeaders()["set-cookie"]);
     }
   } catch (error) {
     next(error);
@@ -76,7 +104,9 @@ export const google = async (req, res, next) => {
 
 export const signOut = async (req, res, next) => {
   try {
-    res.clearCookie("access_token");
+    res.clearCookie("access_token", {
+      httpOnly: true,
+    });
     res.status(200).json("User has been logged out!");
   } catch (error) {
     next(error);

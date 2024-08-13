@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,6 +9,8 @@ import {
   signInStart,
   signInSuccess,
 } from "../redux/user/userSlice";
+
+// const API_BASE_URL = "https://mern-real-estate-a5fc.onrender.com";
 
 export default function SignIn() {
   const [formData, setFormData] = useState({});
@@ -25,10 +28,11 @@ export default function SignIn() {
     ev.preventDefault();
     try {
       dispatch(signInStart());
-      const res = await fetch("/api/auth/signin", {
+      const res = await fetch(`/api/auth/signin`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
+        credentials: "include",
       });
       const data = await res.json();
       if (data.success === false) {

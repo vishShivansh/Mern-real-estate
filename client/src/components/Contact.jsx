@@ -1,10 +1,15 @@
+/* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+
+// const API_BASE_URL = "https://mern-real-estate-a5fc.onrender.com";
 
 export default function Contact({ listing }) {
   const [landlord, setLandlord] = useState(null);
   const [message, setMessage] = useState("");
+  const { currentUser } = useSelector((state) => state.user);
   const onChange = (e) => {
     setMessage(e.target.value);
   };
@@ -14,6 +19,7 @@ export default function Contact({ listing }) {
       try {
         const res = await fetch(`/api/user/${listing.userRef}`);
         const data = await res.json();
+
         setLandlord(data);
       } catch (error) {
         console.log(error);
@@ -21,6 +27,18 @@ export default function Contact({ listing }) {
     };
     fetchLandlord();
   }, [listing.userRef]);
+
+  // Debugging: Check if landlord is null or undefined
+  if (!landlord) {
+    return <p>Loading...</p>; // Show a loading indicator while fetching data
+  }
+
+  // Prepare the email content
+  const subject = `Regarding ${listing.name}`;
+  const body =
+    `Hello ${landlord.username}, ` +
+    `I am ${currentUser.username} (${currentUser.email})` +
+    `Message:${message}`;
   return (
     <>
       {landlord && (
@@ -41,7 +59,11 @@ export default function Contact({ listing }) {
           ></textarea>
 
           <Link
-            to={`mailto:${landlord.email}?subject=Regarding ${listing.name}&body=${message}`}
+            to={`mailto:${
+              landlord.email
+            }?subject=Regarding ${encodeURIComponent(
+              subject
+            )}&body=${encodeURIComponent(body)}`}
             className="bg-slate-700 text-white text-center p-3 uppercase rounded-lg hover:opacity-95"
           >
             Send Message
