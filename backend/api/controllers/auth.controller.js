@@ -34,7 +34,6 @@ export const signin = async (req, res, next) => {
     console.log("Generated Token: ", token);
 
     const { password: pass, ...restInfo } = validUser._doc;
-    console.log("Cookies in SignIn: ", res.cookie);
     res
       .cookie("access_token", token, {
         httpOnly: true,
@@ -45,6 +44,7 @@ export const signin = async (req, res, next) => {
       })
       .status(200)
       .json(restInfo);
+    console.log("Cookies in SignIn: ", res.cookie);
   } catch (error) {
     next(error);
   }
@@ -70,6 +70,7 @@ export const google = async (req, res, next) => {
         })
         .status(200)
         .json(rest);
+      console.log("Cookies in SignIn: ", res.cookie);
     } else {
       const generatePassword =
         Math.random().toString(36).slice(-8) +
@@ -99,6 +100,7 @@ export const google = async (req, res, next) => {
         })
         .status(200)
         .json(rest);
+      console.log("Cookies in SignIn: ", res.cookie);
     }
   } catch (error) {
     next(error);
