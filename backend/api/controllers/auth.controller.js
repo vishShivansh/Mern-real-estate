@@ -40,7 +40,6 @@ export const signin = async (req, res, next) => {
         secure: true, // Use true if the site is served over HTTPS
         path: "/",
         sameSite: "None",
-        domain: "vercel.app",
       })
       .status(200)
       .json(restInfo);
@@ -66,7 +65,6 @@ export const google = async (req, res, next) => {
           secure: true, // Use true if the site is served over HTTPS
           path: "/",
           sameSite: "None",
-          domain: "vercel.app",
         })
         .status(200)
         .json(rest);
@@ -96,7 +94,6 @@ export const google = async (req, res, next) => {
           secure: true, // Use true if the site is served over HTTPS
           path: "/",
           sameSite: "None",
-          domain: "vercel.app",
         })
         .status(200)
         .json(rest);
