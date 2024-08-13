@@ -82,7 +82,6 @@ export default function Profile() {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -118,7 +117,6 @@ export default function Profile() {
         `${API_BASE_URL}/api/user/delete/${currentUser._id}`,
         {
           method: "DELETE",
-          credentials: "include",
         }
       );
       const data = await res.json();
@@ -134,9 +132,7 @@ export default function Profile() {
   const handleSignOut = async () => {
     try {
       dispatch(signOutUserStart());
-      const res = await fetch(`${API_BASE_URL}/api/auth/signout`, {
-        credentials: "include",
-      });
+      const res = await fetch(`${API_BASE_URL}/api/auth/signout`);
       const data = await res.json();
       if (data.success === false) {
         dispatch(signOutUserFailure(data.message));
@@ -228,6 +224,7 @@ export default function Profile() {
         <input
           type="text"
           placeholder="username"
+          id="username"
           className="border p-3 rounded-lg"
           defaultValue={currentUser.username}
           onChange={handleChange}

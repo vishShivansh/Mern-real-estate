@@ -23,12 +23,16 @@ export const updateUser = async (req, res, next) => {
       updateData.password = bcryptjs.hashSync(req.body.password, 10);
     }
     if (req.body.avatar) updateData.avatar = req.body.avatar;
+    console.log("Update username:", req.body.username);
+    console.log("Update email:", req.body.email);
+    console.log("Update password:", req.body.password);
 
     const updatedUser = await User.findByIdAndUpdate(
       req.params.id,
       { $set: updateData },
       { new: true }
     );
+    console.log("Update Data:", updateData);
 
     if (!updatedUser) {
       return next(errorHandler(404, "User not found!"));
@@ -46,6 +50,7 @@ export const deleteUser = async (req, res, next) => {
   if (req.user.id !== req.params.id) {
     return next(errorHandler(401, "You can only delete your own account!"));
   }
+  console.log("Attempting to delete user with ID:", req.params.id);
 
   try {
     const deletedUser = await User.findByIdAndDelete(req.params.id);
@@ -57,9 +62,6 @@ export const deleteUser = async (req, res, next) => {
     // Clear the authentication cookie
     res.clearCookie("access_token", {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "Strict" : "Lax",
-      path: "/",
     });
 
     res.status(200).json("User has been deleted!");

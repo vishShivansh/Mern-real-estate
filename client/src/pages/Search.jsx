@@ -56,10 +56,7 @@ export default function Search() {
       setLoading(true);
       setShowMore(false);
       const searchQuery = urlParams.toString();
-      const res = await fetch(
-        `${API_BASE_URL}/api/listing/get?${searchQuery}`,
-        { credentials: "include" }
-      );
+      const res = await fetch(`${API_BASE_URL}/api/listing/get?${searchQuery}`);
       const data = await res.json();
       if (data.length > 8) {
         setShowMore(true);

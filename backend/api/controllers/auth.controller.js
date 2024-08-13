@@ -3,8 +3,6 @@ import jwt from "jsonwebtoken";
 import User from "../models/user.model.js";
 import { errorHandler } from "../utils/error.js";
 
-const JWT_SECRET = "nwioahfioenajfbq34uge2qfuqf930742";
-
 export const signup = async (req, res, next) => {
   const { username, email, password } = req.body;
   const hashedPassword = bcryptjs.hashSync(password, 10);
@@ -30,18 +28,18 @@ export const signin = async (req, res, next) => {
     if (!validPassword) {
       return next(errorHandler(401, "Wrong credentials!"));
     }
-    const token = jwt.sign({ id: validUser._id }, JWT_SECRET, {
+    const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET, {
       expiresIn: "24h",
     });
     console.log("Generated Token: ", token);
+
     const { password: pass, ...restInfo } = validUser._doc;
+    console.log("Cookies in SignIn: ", res.cookie);
     res
       .cookie("access_token", token, {
         httpOnly: true,
         secure: true,
-        sameSite: "None",
-        maxAge: 24 * 60 * 60 * 1000,
-        domain: "mern-real-estate-gamma.vercel.app",
+        sameSite: "Strict",
         path: "/",
       })
       .status(200)
@@ -55,17 +53,17 @@ export const google = async (req, res, next) => {
   try {
     const user = await User.findOne({ email: req.body.email });
     if (user) {
-      const token = jwt.sign({ id: user._id }, JWT_SECRET, {
+      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
         expiresIn: "24h",
       });
+      console.log("JWT Secret:", process.env.JWT_SECRET);
+      console.log("Generated Token: ", token);
       const { password: pass, ...rest } = user._doc;
       res
         .cookie("access_token", token, {
           httpOnly: true,
           secure: true,
-          sameSite: "None",
-          maxAge: 24 * 60 * 60 * 1000,
-          domain: "mern-real-estate-gamma.vercel.app",
+          sameSite: "Strict",
           path: "/",
         })
         .status(200)
@@ -85,7 +83,7 @@ export const google = async (req, res, next) => {
       });
 
       await newUser.save();
-      const token = jwt.sign({ id: newUser._id }, JWT_SECRET, {
+      const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, {
         expiresIn: "24h",
       });
       const { password: pass, ...rest } = newUser._doc;
@@ -93,9 +91,7 @@ export const google = async (req, res, next) => {
         .cookie("access_token", token, {
           httpOnly: true,
           secure: true,
-          sameSite: "None",
-          maxAge: 24 * 60 * 60 * 1000,
-          domain: "mern-real-estate-gamma.vercel.app",
+          sameSite: "Strict",
           path: "/",
         })
         .status(200)
@@ -110,8 +106,6 @@ export const signOut = async (req, res, next) => {
   try {
     res.clearCookie("access_token", {
       httpOnly: true,
-      secure: true,
-      sameSite: "None",
     });
     res.status(200).json("User has been logged out!");
   } catch (error) {

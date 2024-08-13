@@ -3,16 +3,19 @@ import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
-import authRouter from "./api/routes/auth.route.js";
-import listingRouter from "./api/routes/listing.route.js";
-import userRouter from "./api/routes/user.route.js";
+import authRouter from "./routes/auth.route.js";
+import listingRouter from "./routes/listing.route.js";
+import userRouter from "./routes/user.route.js";
 
 // Initialize environment variables
 dotenv.config();
 
 // Connect to MongoDB
 mongoose
-  .connect(process.env.MONGO)
+  .connect(process.env.MONGO, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => {
     console.log("Connected to MongoDB!");
   })
@@ -26,11 +29,12 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
-// Middleware to log cookies
-app.use((req, res, next) => {
-  console.log("Cookies:", req.cookies);
-  next();
-});
+// app.use(
+//   cors({
+//     origin: "http://localhost:5173", // Adjust as needed
+//     credentials: true, // Allow cookies to be sent
+//   })
+// );
 
 const corsOptions = {
   origin: "https://mern-real-estate-gamma.vercel.app",
