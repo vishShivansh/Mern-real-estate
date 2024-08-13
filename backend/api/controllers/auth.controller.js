@@ -44,7 +44,7 @@ export const signin = async (req, res, next) => {
       })
       .status(200)
       .json(restInfo);
-    console.log("Cookies in SignIn: ", res.cookie);
+    console.log("Set-Cookie Header: ", res.getHeaders()["set-cookie"]);
   } catch (error) {
     next(error);
   }
@@ -70,7 +70,7 @@ export const google = async (req, res, next) => {
         })
         .status(200)
         .json(rest);
-      console.log("Cookies in SignIn: ", res.cookie);
+      console.log("Set-Cookie Header: ", res.getHeaders()["set-cookie"]);
     } else {
       const generatePassword =
         Math.random().toString(36).slice(-8) +
@@ -100,7 +100,7 @@ export const google = async (req, res, next) => {
         })
         .status(200)
         .json(rest);
-      console.log("Cookies in SignIn: ", res.cookie);
+      console.log("Set-Cookie Header: ", res.getHeaders()["set-cookie"]);
     }
   } catch (error) {
     next(error);
