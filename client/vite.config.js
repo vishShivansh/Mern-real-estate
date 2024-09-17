@@ -8,6 +8,7 @@ export default defineConfig({
     proxy: {
       "/api": {
         target: "https://mern-real-estate-tkho.onrender.com", // Your backend URL
+        // target: "http://localhost:3000",
         changeOrigin: true,
       },
     },

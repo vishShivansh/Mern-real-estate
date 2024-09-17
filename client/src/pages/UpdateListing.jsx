@@ -13,6 +13,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { app } from "../firebase";
 
 const API_BASE_URL = "https://mern-real-estate-a5fc.onrender.com";
+// const API_BASE_URL = "http://localhost:3000";
 
 export default function CreateListing() {
   const { currentUser } = useSelector((state) => state.user);
