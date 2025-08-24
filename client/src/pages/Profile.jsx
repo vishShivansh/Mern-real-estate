@@ -32,6 +32,7 @@ import {
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export default function Profile() {
+  const token = useSelector((state) => state.user.token);
   const fileRef = useRef(null);
   const { currentUser, loading, error } = useSelector((state) => state.user);
   const [file, setFile] = useState(undefined);
@@ -92,9 +93,10 @@ export default function Profile() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(formData),
-          credentials: "include",
+          // credentials: "include",
         }
       );
       const data = await res.json();
@@ -117,6 +119,9 @@ export default function Profile() {
         `${API_BASE_URL}/api/user/delete/${currentUser._id}`,
         {
           method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
       const data = await res.json();
@@ -153,8 +158,9 @@ export default function Profile() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
-          credentials: "include",
+          // credentials: "include",
         }
       );
       const data = await res.json();
@@ -174,7 +180,10 @@ export default function Profile() {
         `${API_BASE_URL}/api/listing/delete/${listingId}`,
         {
           method: "DELETE",
-          credentials: "include",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+          // credentials: "include",
         }
       );
       const data = await res.json();

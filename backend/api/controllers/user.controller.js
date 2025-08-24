@@ -2,6 +2,7 @@ import bcryptjs from "bcryptjs";
 import Listing from "../models/listing.model.js";
 import User from "../models/user.model.js";
 import { errorHandler } from "../utils/error.js";
+import { isProduction } from "./auth.controller.js";
 
 export const test = (req, res) => {
   res.json({ message: "Hello World!" });
@@ -23,16 +24,20 @@ export const updateUser = async (req, res, next) => {
       updateData.password = bcryptjs.hashSync(req.body.password, 10);
     }
     if (req.body.avatar) updateData.avatar = req.body.avatar;
+    if (!isProduction) {
     console.log("Update username:", req.body.username);
     console.log("Update email:", req.body.email);
     console.log("Update password:", req.body.password);
+    }
 
     const updatedUser = await User.findByIdAndUpdate(
       req.params.id,
       { $set: updateData },
       { new: true }
     );
+    if (!isProduction) {
     console.log("Update Data:", updateData);
+    }
 
     if (!updatedUser) {
       return next(errorHandler(404, "User not found!"));
@@ -50,7 +55,9 @@ export const deleteUser = async (req, res, next) => {
   if (req.user.id !== req.params.id) {
     return next(errorHandler(401, "You can only delete your own account!"));
   }
+  if (!isProduction) {
   console.log("Attempting to delete user with ID:", req.params.id);
+  }
 
   try {
     const deletedUser = await User.findByIdAndDelete(req.params.id);

@@ -15,6 +15,7 @@ import { app } from "../firebase";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export default function CreateListing() {
+  const token = useSelector((state) => state.user.token);
   const { currentUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const params = useParams();
@@ -159,12 +160,13 @@ export default function CreateListing() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
             ...formData,
             userRef: currentUser._id,
           }),
-          credentials: "include",
+          // credentials: "include",
         }
       );
       const data = await res.json();

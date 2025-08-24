@@ -1,12 +1,15 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import OAuth from "../components/OAuth";
+import { signUpFailure, signUpStart, signUpSuccess } from "../redux/user/userSlice";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export default function SignUp() {
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({});
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -21,23 +24,27 @@ export default function SignUp() {
   const handleSubmit = async (ev) => {
     ev.preventDefault();
     try {
+      dispatch(signUpStart());
       setLoading(true);
       const res = await fetch(`${API_BASE_URL}/api/auth/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
-        credentials: "include",
+        // credentials: "include",
       });
       const data = await res.json();
       if (data.success === false) {
+        dispatch(signUpFailure(data.message));
         setError(data.message);
         setLoading(false);
         return;
       }
       setLoading(false);
       setError(null);
+      dispatch(signUpSuccess(data));
       navigate("/sign-in");
     } catch (error) {
+      dispatch(signUpFailure(error.message));
       setLoading(false);
       setError(error.message);
     }

@@ -12,6 +12,7 @@ export default function OAuth() {
   const navigate = useNavigate();
   const handleGoogleClick = async () => {
     try {
+      // dispatch(signInStart());
       const provider = new GoogleAuthProvider();
       const auth = getAuth(app);
       const result = await signInWithPopup(auth, provider);
@@ -23,12 +24,16 @@ export default function OAuth() {
           email: result.user.email,
           photo: result.user.photoURL,
         }),
-        credentials: "include", // Include cookies with the request
+        // credentials: "include", // Include cookies with the request
       });
       const data = await res.json();
+      // if(data.success === false){
+      //   dispatch(signInFailure(data.message));
+      // }
       dispatch(signInSuccess(data));
       navigate("/");
     } catch (error) {
+      // dispatch(signInFailure(error.message));
       console.log("Could not sign in with google", error);
     }
   };

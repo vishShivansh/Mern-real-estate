@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export default function Contact({ listing }) {
+  const token = useSelector((state) => state.user.token);
   const [landlord, setLandlord] = useState(null);
   const [message, setMessage] = useState("");
   const { currentUser } = useSelector((state) => state.user);
@@ -19,7 +20,10 @@ export default function Contact({ listing }) {
       try {
         const res = await fetch(`${API_BASE_URL}/api/user/${listing.userRef}`, {
           method: "GET",
-          credentials: "include",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          // credentials: "include",
         });
         const data = await res.json();
 
