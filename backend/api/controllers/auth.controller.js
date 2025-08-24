@@ -15,6 +15,8 @@ export const signup = async (req, res, next) => {
   }
 };
 
+const isProduction = process.env.NODE_ENV === "production";
+
 export const signin = async (req, res, next) => {
   const { email, password } = req.body;
   try {
@@ -37,9 +39,9 @@ export const signin = async (req, res, next) => {
     res
       .cookie("access_token", token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV==="production", // Use true if the site is served over HTTPS
+        secure: isProduction, // dev me false, prod me true
         path: "/",
-        sameSite: "None",
+        sameSite: isProduction ? "None" : "Lax",
       })
       .status(200)
       .json(restInfo);
@@ -62,9 +64,9 @@ export const google = async (req, res, next) => {
       res
         .cookie("access_token", token, {
           httpOnly: true,
-          secure: process.env.NODE_ENV==="production", // Use true if the site is served over HTTPS
+          secure: isProduction, // dev me false, prod me true
           path: "/",
-          sameSite: "None",
+          sameSite: isProduction ? "None" : "Lax",
         })
         .status(200)
         .json(rest);
@@ -91,9 +93,9 @@ export const google = async (req, res, next) => {
       res
         .cookie("access_token", token, {
           httpOnly: true,
-          secure: process.env.NODE_ENV==="production", // Use true if the site is served over HTTPS
+          secure: isProduction, // dev me false, prod me true
           path: "/",
-          sameSite: "None",
+          sameSite: isProduction ? "None" : "Lax",
         })
         .status(200)
         .json(rest);
