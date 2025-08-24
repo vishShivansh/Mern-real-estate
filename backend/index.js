@@ -29,18 +29,16 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
-// app.use(
-//   cors({
-//     origin: "http://localhost:5173", // Adjust as needed
-//     credentials: true, // Allow cookies to be sent
-//   })
-// );
+
+const isProduction = process.env.NODE_ENV === "production";
 
 const corsOptions = {
-  origin: "https://mern-real-estate-gamma.vercel.app",
+  origin: isProduction
+    ? "https://mern-real-estate-gamma.vercel.app" // Production URL
+    : "http://localhost:5173",                     // Development URL
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true, // Allow cookies to be sent
+  credentials: true, // Allow cookies
 };
 
 app.use(cors(corsOptions));

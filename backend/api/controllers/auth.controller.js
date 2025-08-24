@@ -37,8 +37,7 @@ export const signin = async (req, res, next) => {
     res
       .cookie("access_token", token, {
         httpOnly: true,
-        secure: true, // Use true if the site is served over HTTPS
-        domain: "mern-real-estate-gamma.vercel.app",
+        secure: process.env.NODE_ENV==="production", // Use true if the site is served over HTTPS
         path: "/",
         sameSite: "None",
       })
@@ -63,8 +62,7 @@ export const google = async (req, res, next) => {
       res
         .cookie("access_token", token, {
           httpOnly: true,
-          secure: true, // Use true if the site is served over HTTPS
-          domain: "mern-real-estate-gamma.vercel.app",
+          secure: process.env.NODE_ENV==="production", // Use true if the site is served over HTTPS
           path: "/",
           sameSite: "None",
         })
@@ -93,8 +91,7 @@ export const google = async (req, res, next) => {
       res
         .cookie("access_token", token, {
           httpOnly: true,
-          secure: true, // Use true if the site is served over HTTPS
-          domain: "mern-real-estate-gamma.vercel.app",
+          secure: process.env.NODE_ENV==="production", // Use true if the site is served over HTTPS
           path: "/",
           sameSite: "None",
         })

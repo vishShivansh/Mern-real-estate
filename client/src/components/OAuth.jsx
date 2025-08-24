@@ -5,8 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { app } from "../firebase";
 import { signInSuccess } from "../redux/user/userSlice";
 
-const API_BASE_URL = "https://mern-real-estate-a5fc.onrender.com";
-// const API_BASE_URL = "http://localhost:3000";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export default function OAuth() {
   const dispatch = useDispatch();

@@ -29,8 +29,7 @@ import {
   updateUserSuccess,
 } from "../redux/user/userSlice.js";
 
-const API_BASE_URL = "https://mern-real-estate-a5fc.onrender.com";
-// const API_BASE_URL = "http://localhost:3000";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export default function Profile() {
   const fileRef = useRef(null);
