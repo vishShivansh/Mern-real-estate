@@ -82,7 +82,7 @@ export const google = async (req, res, next) => {
       // console.log("Set-Cookie Header: ", res.getHeaders()["set-cookie"]);
 
       // ⚡ Cookie ke bajay direct JSON response bhej
-      res.status(200).json({ token, user: restInfo });
+      res.status(200).json({ token, user: rest });
     } else {
       const generatePassword =
         Math.random().toString(36).slice(-8) +
@@ -114,7 +114,7 @@ export const google = async (req, res, next) => {
       // console.log("Set-Cookie Header: ", res.getHeaders()["set-cookie"]);
 
       // ⚡ Cookie ke bajay direct JSON response bhej
-      res.status(200).json({ token, user: restInfo });
+      res.status(200).json({ token, user: rest });
     }
   } catch (error) {
     next(error);
