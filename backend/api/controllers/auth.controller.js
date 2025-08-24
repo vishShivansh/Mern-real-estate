@@ -41,7 +41,7 @@ export const signin = async (req, res, next) => {
         httpOnly: true,
         secure: isProduction, // dev me false, prod me true
         path: "/",
-        sameSite: isProduction ? "Lax" : "Lax",
+        sameSite: isProduction ? "None" : "Lax",
       })
       .status(200)
       .json(restInfo);
@@ -66,7 +66,7 @@ export const google = async (req, res, next) => {
           httpOnly: true,
           secure: isProduction, // dev me false, prod me true
           path: "/",
-          sameSite: isProduction ? "Lax" : "Lax",
+          sameSite: isProduction ? "None" : "Lax",
         })
         .status(200)
         .json(rest);
@@ -95,7 +95,7 @@ export const google = async (req, res, next) => {
           httpOnly: true,
           secure: isProduction, // dev me false, prod me true
           path: "/",
-          sameSite: isProduction ? "Lax" : "Lax",
+          sameSite: isProduction ? "None" : "Lax",
         })
         .status(200)
         .json(rest);
