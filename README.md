@@ -1,12 +1,10 @@
-# LuxeNest | Real Estate Platform
-
 <h2 align="center">
   LuxeNest | Real Estate Platform <br/>
   <a href="https://mern-real-estate-gamma.vercel.app" target="_blank">Live Demo</a>
 </h2>
 
 <div align="center">
-  <img alt="Demo" src="./Images/readme-img1.png" width="80%" />
+  <img alt="Demo" src="readme_imgage.png" width="80%" />
 </div>
 
 <br/>
@@ -18,7 +16,7 @@
 
 ---
 
-## TL;DR
+## Overview
 
 LuxeNest is a full-stack real estate web application where users can browse property listings, contact landlords, and manage their profiles. Landlords can add, update, or delete listings, set prices and discounts, and communicate directly with potential tenants or buyers.  
 
